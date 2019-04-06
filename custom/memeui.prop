@@ -1,0 +1,2 @@
+persist.vendor.camera.HAL3.enabled=1
+persist.vendor.camera.eis.enable=0

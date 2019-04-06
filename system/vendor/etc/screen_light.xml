@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<screen_light>
+    <screen vendor="BOE">
+        <light CCT="2310"                R="255" G="213" B="167"  DUV="-0.0014" />
+        <light CCT="2400" deltaCCT="400" R="255" G="213" B="167"  DUV="-0.0015" />
+        <light CCT="2600" deltaCCT="200" R="255" G="213" B="167"  DUV="-0.0012" />
+        <light CCT="2800" deltaCCT="200" R="255" G="213" B="167" DUV="-0.0014" />
+        <light CCT="3000" deltaCCT="200" R="255" G="220" B="178" DUV="-0.0013" />
+        <light CCT="3200" deltaCCT="200" R="255" G="220" B="178" DUV="-0.0014" />
+        <light CCT="3400" deltaCCT="200" R="255" G="220" B="178" DUV="-0.0015" />
+        <light CCT="3600" deltaCCT="200" R="255" G="225" B="189" DUV="-0.0015" />
+        <light CCT="3800" deltaCCT="200" R="255" G="225" B="189" DUV="-0.0014" />
+        <light CCT="4000" deltaCCT="200" R="255" G="225" B="189" DUV="-0.0014" />
+        <light CCT="4200" deltaCCT="200" R="255" G="229" B="199" DUV="-0.0015" />
+        <light CCT="4500" deltaCCT="300" R="255" G="229" B="199" DUV="-0.0012" />
+        <light CCT="4800" deltaCCT="300" R="255" G="229" B="199" DUV="-0.0012" />
+        <light CCT="5100" deltaCCT="300" R="255" G="229" B="199" DUV="-0.0015" />
+        <light CCT="5600" deltaCCT="500" R="255" G="229" B="199" DUV="-0.0012" />
+        <light CCT="6100" deltaCCT="500" R="255" G="229" B="199" DUV="-0.0012" />
+        <light CCT="6600" deltaCCT="500" R="255" G="229" B="199" DUV="-0.0014" />
+        <light CCT="7100" deltaCCT="500" R="255" G="237" B="213" DUV="-0.0012" />
+        <light CCT="7600" deltaCCT="500" R="255" G="243" B="226" DUV="-0.0013" />
+        <light CCT="8100" deltaCCT="500" R="255" G="248" B="238" DUV="-0.0011" />
+    </screen>
+
+    <screen vendor="TIANMA">
+        <light CCT="2310"                R="255" G="212" B="160"  DUV="0.0018" />
+        <light CCT="2400" deltaCCT="400" R="255" G="212" B="160"  DUV="0.002" />
+        <light CCT="2600" deltaCCT="200" R="255" G="212" B="160"  DUV="0.0017" />
+        <light CCT="2800" deltaCCT="200" R="255" G="212" B="160"  DUV="0.0019" />
+        <light CCT="3000" deltaCCT="200" R="255" G="217" B="170" DUV="0.0016" />
+        <light CCT="3200" deltaCCT="200" R="255" G="217" B="170" DUV="0.0018" />
+        <light CCT="3400" deltaCCT="200" R="255" G="217" B="170" DUV="0.0018" />
+        <light CCT="3600" deltaCCT="200" R="255" G="223" B="181" DUV="0.0016" />
+        <light CCT="3800" deltaCCT="200" R="255" G="223" B="181" DUV="0.0019" />
+        <light CCT="4000" deltaCCT="200" R="255" G="223" B="181" DUV="0.0019" />
+        <light CCT="4200" deltaCCT="200" R="255" G="227" B="191" DUV="0.0017" />
+        <light CCT="4500" deltaCCT="300" R="255" G="227" B="191" DUV="0.0016" />
+        <light CCT="4800" deltaCCT="300" R="255" G="227" B="191" DUV="0.0017" />
+        <light CCT="5100" deltaCCT="300" R="255" G="227" B="191" DUV="0.0018" />
+        <light CCT="5600" deltaCCT="500" R="255" G="227" B="191" DUV="0.0016" />
+        <light CCT="6100" deltaCCT="500" R="255" G="227" B="191" DUV="0.0019" />
+        <light CCT="6600" deltaCCT="500" R="255" G="227" B="191" DUV="0.0019" />
+        <light CCT="7100" deltaCCT="500" R="255" G="234" B="206" DUV="0.0018" />
+        <light CCT="7600" deltaCCT="500" R="255" G="241" B="219" DUV="0.0023" />
+        <light CCT="8100" deltaCCT="500" R="255" G="246" B="231" DUV="0.0019" />
+    </screen>
+</screen_light>
