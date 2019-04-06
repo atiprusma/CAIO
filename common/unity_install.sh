@@ -1,5 +1,5 @@
-# Downgrade version code; only testing purpose
-#sed -i "4 s/13/10/" $TMPDIR/module.prop
+# Downgrade version code; testing purpose only
+#sed -i "4 s/$(grep_prop versionCode $TMPDIR/module.prop)/1/" $TMPDIR/module.prop
 
 # Vars
 ROM=$(grep_prop ro.build.display.id | cut -d'-' -f1)
@@ -73,8 +73,6 @@ PASANG() {
       fi
   done
   [ "$MICAM" ] && cp_ch $TMPDIR/APK/$1.apk $TMPDIR/system/priv-app/$MICAM/$MICAM.apk
-  #cp_ch $CUS/priv-app-permissions-miuicamera.xml $TMPDIR/system/etc/permissions/priv-app-permissions-$MICAM.xml
-  #cp_ch $CUS/miuicamera-permissions.xml $TMPDIR/system/etc/default-permissions/$MICAM-permissions.xml
   BERSIHIN
 }
 
