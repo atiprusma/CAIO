@@ -48,7 +48,6 @@ unity_custom() {
       sed -i "s/meme/$DEVNAME/g" $TMPDIR/module.prop
   else
       ui_print " "
-      ui_print " ! Your $DEVNAME ($DEVCODE) is incompatible !"
-      abort 1
+      abort " ! Your $DEVNAME ($DEVCODE) is incompatible !"      
   fi
 }
