@@ -203,7 +203,7 @@ if $BOOTMODE; then
         sed -i "2 s/One/One for MemeUI/" $TMPDIR/module.prop
         sed -i "s/. Systemlessly install\/replace and patch/. Patch/g" $TMPDIR/module.prop
     fi   
-    if [ $DFP/$DEVCODE.xml ]; then
+    if [ -f $DFP/$DEVCODE.xml ]; then
         rm -rf $DF
         cp -rf $DFP/$DEVCODE.xml $DF
     else
