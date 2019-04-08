@@ -1,6 +1,3 @@
-# Downgrade version code; testing purpose only
-#sed -i "4 s/$(grep_prop versionCode $TMPDIR/module.prop)/1/" $TMPDIR/module.prop
-
 # Vars
 ROM=$(grep_prop ro.build.display.id | cut -d'-' -f1)
 DFP=/system/etc/device_features
@@ -60,20 +57,20 @@ PASANG() {
   ui_print "- Finding installed Miui Camera"
   for c in $(find /system/priv-app -type d -name "*MiuiCamera*"); 
   do
-      if [ -d $c ]; 
-      then
-          MICAM=$(echo $c | cut -d'/' -f4)
-          ui_print " "
-          ui_print "  ! $MICAM installed on system, replacing"
-          mkdir -p $TMPDIR$c 2>/dev/null
-          mktouch $TMPDIR$c/.replace 2>/dev/null
-      else
-          ui_print " "
-          ui_print "- No MiuiCamera found, install as is"
-      fi
+    MICAM=$(echo $c | cut -d'/' -f4)
   done
-  [ "$MICAM" ] && cp_ch $TMPDIR/APK/$1.apk $TMPDIR/system/priv-app/$MICAM/$MICAM.apk 2>/dev/null
-  #BERSIHIN
+  if [ ! "$MICAM" == "MiuiCamera" ]; 
+  then
+      ui_print " "
+      ui_print "  ! $MICAM installed on system, replacing"
+      mkdir -p $TMPDIR$c 2>/dev/null
+      mktouch $TMPDIR$c/.replace 2>/dev/null
+  else
+      ui_print " "
+      ui_print "- No MiuiCamera found, install as is"
+  fi
+  cp_ch $CUS/$1.apk $TMPDIR/system/priv-app/$MICAM/$MICAM.apk 2>/dev/null
+  # BERSIHIN
 }
 
 EISENC() {  
@@ -106,7 +103,6 @@ EISENC() {
 }
 
 AOSPLOS() {
-  unzip -oq $CUS/APK -d $TMPDIR 2>/dev/null
   unzip -oq $CUS/32bit -d $TMPDIR 2>/dev/null
   unzip -oq $CUS/64bit -d $TMPDIR 2>/dev/null
   
@@ -196,27 +192,28 @@ else
     ui_print " - Skipping some AOSP/LOS patches"
     EISENC
     prop_process $TMPDIR/custom/memeui.prop 2>/dev/null
-    sed -i "2 s/One/One for MemeUI/" $TMPDIR/module.prop 2>/dev/null
-    sed -i "s/. Systemlessly install\/replace and patch/. Patch/g" $TMPDIR/module.prop 2>/dev/null
+    sed -i "2 s/One/One for MIUI/" $TMPDIR/module.prop 2>/dev/null
+    sed -i "s/install\/replace and patch/patch/g" $TMPDIR/module.prop 2>/dev/null
 fi   
 
+# Check & patch device features
 if [ -f $DFP/$DEVCODE.xml ]; then
     rm -rf $DF 2>/dev/null
-    cp -rf $DFP/$DEVCODE.xml $DF 2>/dev/null
+    cp -rf $DFP/$DEVCODE.xml $DF 2>/dev/nul
 else
     cp -rf $TMPDIR$DFP/wayne.xml $DF 2>/dev/null
 fi
 
-ui_print " "
-ui_print "+ Patching $DEVCODE.xml..." 
-while IFS= read -r I N; 
-do
-    TAMBAL $I $N
-done <"$CUS/features.txt"
-
-
-# Check device features
-[ ! -f $DF ] && abort "! Failed to patch $DEVCODE.xml !"
+if [ -f $DF ]; then 
+    ui_print " "
+    ui_print "+ Patching $DEVCODE.xml..." 
+    while IFS= read -r I N; 
+    do
+        TAMBAL $I $N
+    done <"$CUS/features.txt"
+else
+    abort "! Failed to patch $DEVCODE.xml !"
+fi
  
 ui_print " "
 ui_print "   ****************  [NOTES]  *******************"
@@ -225,3 +222,5 @@ ui_print "   **       Please reflash this module         **"
 ui_print "   **           from RECOVERY/TWRP             **"
 ui_print "   **********************************************"
 ui_print " "
+# Downgrade version code; testing purpose only
+#sed -i "4 s/$(grep_prop versionCode $TMPDIR/module.prop)/1/" $TMPDIR/module.prop
