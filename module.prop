@@ -1,6 +1,6 @@
 id=CAIO
 name=[meme] Camera All-in-One
-version=v14.2
+version=XIV
 versionCode=142
 author=atiprusma @ TG, Hadinata
 description=Various camera patch for meme. Systemlessly install/replace and patch MIUI Camera features, disable EIS, seemless 4k60 on GCam, patch video encoder, mute camera sounds, enable FP shutter, etc.
