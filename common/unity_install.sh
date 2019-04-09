@@ -67,8 +67,9 @@ PASANG() {
       mktouch $TMPDIR$c/.replace 2>/dev/null
   else
       ui_print " "
-      ui_print "- No MiuiCamera found, install as is"
+      ui_print "- No MiuiCamera found, install as $MICAM"
   fi
+  cp_ch $CUS/privapp-permissions-com.android.camera.xml $TMPDIR/system/etc/permissions/privapp-permissions-com.android.camera.xml 2>/dev/null
   cp_ch $CUS/$1.apk $TMPDIR/system/priv-app/$MICAM/$MICAM.apk 2>/dev/null
   # BERSIHIN
 }
@@ -199,7 +200,7 @@ fi
 # Check & patch device features
 if [ -f $DFP/$DEVCODE.xml ]; then
     rm -rf $DF 2>/dev/null
-    cp -rf $DFP/$DEVCODE.xml $DF 2>/dev/nul
+    cp -rf $DFP/$DEVCODE.xml $DF 2>/dev/null
 else
     cp -rf $TMPDIR$DFP/wayne.xml $DF 2>/dev/null
 fi
