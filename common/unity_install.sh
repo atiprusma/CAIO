@@ -55,11 +55,11 @@ PASANG() {
   C=$(find /system/priv-app -type d -name "*MiuiCamera*" | cut -d'/' -f4 | head -n1)
   if [ -n "$C" ]; 
   then
-      ui_print "   "$C""
+      ui_print "    "$C""
       #mktouch $TMPDIR/system/priv-app/$C/.replace 2>/dev/null
       MICAM="$C"
   else
-      ui_print "   "$MICAM""
+      ui_print "    "$MICAM""
       ui_print " "
       ui_print "  ! Please manually give permissions for MIUI Camera !"
   fi
@@ -175,17 +175,7 @@ AOSPLOS() {
       sed -i "s/, enable FP shutter,/,/g" $TMPDIR/module.prop 2>/dev/null
   fi
 }
-SPAI() {
-    ui_print " "
-    ui_print "- Enable selfie and portrait AI (Gimmick)? -"
-    ui_print "  Vol+ (Up)   = Yes"
-    ui_print "  Vol- (Down) = No"
-    if $VKSEL; then
-      sed -i '3 s/false/true/' $CUS/features.txt
-      sed -i '5 s/false/true/' $CUS/features.txt
-      sed -i '10 s/false/true/' $CUS/features.txt
-    fi
-}
+
 ui_print " "
 ui_print "- Detecting ROM -"
 if [ ! -f /system/priv-app/MiuiSystemUI/MiuiSystemUI.apk ];
@@ -205,6 +195,18 @@ else
     prop_process $TMPDIR/custom/miui.prop 2>/dev/null
     sed -i "2 s/One/One for MIUI/" $TMPDIR/module.prop 2>/dev/null
     sed -i "s/install\/replace and patch/patch/g" $TMPDIR/module.prop 2>/dev/null
+    ui_print " "
+    ui_print "- Enable selfie and portrait AI (Gimmick)? -"
+    ui_print "  Vol+ (Up)   = Yes"
+    ui_print "  Vol- (Down) = No"
+    if $VKSEL; then
+        ui_print "  > Enabled"
+        sed -i '3 s/false/true/' $CUS/features.txt
+        sed -i '5 s/false/true/' $CUS/features.txt
+        sed -i '10 s/false/true/' $CUS/features.txt
+    else
+        ui_print "  > Enabled"
+    fi
 fi
 
 ui_print " "
@@ -217,8 +219,6 @@ else
     ui_print "  > Okay, no cleanup"
 fi
 
-SPAI
-
 # Check & patch device features
 if [ -f $DFP/$DEVCODE.xml ]; then
     rm -rf $DF 2>/dev/null
@@ -226,7 +226,6 @@ if [ -f $DFP/$DEVCODE.xml ]; then
 else
     cp_ch $TMPDIR$DFP/wayne.xml $DF 2>/dev/null
 fi
-sleep 3
 
 if [ -f $DF ]; then 
     ui_print " "
