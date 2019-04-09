@@ -1,19 +1,16 @@
 # This file will be read by resetprop
 # Example: Change dpi
 # ro.sf.lcd_density=320
-# Adds calib path prop
-ro.config.calibration_cad=/system/etc/calibration_cad.xml
-
-camera.hal1.packagelist=com.skype.raider,com.google.android.talk,com.whatsapp
+# Additional buffers shared between Camera and Video
+vidc.enc.dcvs.extra-buff-count=2
 camera.lowpower.record.enable=1
 
 # Forcing HAL1 for below packages
-vendor.camera.aux.packagelist=com.bsgmod.camera,com.google.android.GoogleCameraWide,com.android.camera
-vendor.camera.aux.packagelist2=com.android.systemui
+camera.aux.packagelist=org.codeaurora.snapcam,com.android.camera,com.qualcomm.qti.qmmi,org.lineage.snap,com.google.android.GoogleCamera,com.google.android.GoogleCameraTele,com.google.android.GoogleCameraWide,com.bsgmod.camera
+camera.hal1.packagelist=com.skype.raider,com.whatsapp,com.android.camera,com.facebook.katana,com.gbwhatsapp,com.gbinsta
 
-# Enable HAL3 and EIS
-persist.camera.HAL3.enabled=1
-persist.camera.eis.enable=0
+# Adds calib path prop
+ro.config.calibration_cad=/system/etc/calibration_cad.xml
 
 # Dual Camera props
 persist.camera.auxswitch.threshold=330
@@ -49,37 +46,44 @@ persist.imx376_sunny.light.lux=280
 persist.imx376_ofilm.low.lux=310
 persist.imx376_ofilm.light.lux=280
 
-# Advance features props
-persist.camera.advanceFeatureMask=0x7E7
-persist.camera.disablePDAF=FALSE
-persist.camera.disableFocusIndication=1
-persist.camera.EISWidthMargin=0.25
-persist.camera.EISHeightMargin=0.4
-persist.camera.EISLDCGridEnabled=1
-persist.camera.EISv3GyroDumpEnabled=0
-persist.camera.EISv3OperationMode=0
-persist.camera.EISv2GyroDumpEnabled=0
-persist.camera.EISv2OperationMode=0
-persist.camera.enable3ADebugData=FALSE
-persist.camera.enableBubbleRecovery=FALSE
-persist.camera.enableICAInGrid=1
-persist.camera.enableIHDRSnapshot=1
-persist.camera.enableInternalHALPixelStreamConfig=TRUE
-persist.camera.enableSensorHWSync=TRUE
-persist.camera.enableSensorFpsMatch=TRUE
-persist.camera.enableTuningMetadata=FALSE
-persist.camera.exposeFullSizeForQCFA=FALSE
-persist.camera.FDPreProcessing=GTM
-persist.camera.fovcEnable=1
-persist.camera.forceDisableUBWCOnIfeIpeLink=0
-persist.camera.isBeautyMakeupSupported=TRUE
-persist.camera.iseispreviewSupported=TRUE
-persist.camera.ismfnrbokehsupported=TRUE
-persist.camera.isVideoBeautifierSupported=TRUE
-persist.camera.logInfoMask=0
-persist.camera.minReprocessInputWidth=4000
-persist.camera.minReprocessInputHeight=3000
-persist.camera.multiCameraEnable=TRUE
-persist.camera.multiCameraFrameSync=1
-persist.camera.overrideLogLevels=0x1F
-persist.camera.useFeatureForQCFA=1
+# Enable HAL3 and EIS
+persist.camera.HAL3.enabled=1
+persist.camera.eis.enable=0
+
+# Advance features vendor props
+persist.vendor.camera.advanceFeatureMask=0x7E7
+persist.vendor.camera.disablePDAF=FALSE
+persist.vendor.camera.disableFocusIndication=1
+persist.vendor.camera.EISWidthMargin=0.25
+persist.vendor.camera.EISHeightMargin=0.4
+persist.vendor.camera.EISLDCGridEnabled=1
+persist.vendor.camera.EISv3GyroDumpEnabled=0
+persist.vendor.camera.EISv3OperationMode=0
+persist.vendor.camera.EISv2GyroDumpEnabled=0
+persist.vendor.camera.EISv2OperationMode=0
+persist.vendor.camera.enable3ADebugData=FALSE
+persist.vendor.camera.enableAdvanceFeatures=TRUE
+persist.vendor.camera.enableBubbleRecovery=FALSE
+persist.vendor.camera.enableICAInGrid=1
+persist.vendor.camera.enableIHDRSnapshot=1
+persist.vendor.camera.enableInternalHALPixelStreamConfig=TRUE
+persist.vendor.camera.enableSensorHWSync=TRUE
+persist.vendor.camera.enableSensorFpsMatch=TRUE
+persist.vendor.camera.enableTuningMetadata=FALSE
+persist.vendor.camera.exposeFullSizeForQCFA=FALSE
+persist.vendor.camera.FDPreProcessing=GTM
+persist.vendor.camera.fovcEnable=1
+persist.vendor.camera.forceDisableUBWCOnIfeIpeLink=0
+persist.vendor.camera.isBeautyMakeupSupported=TRUE
+persist.vendor.camera.iseispreviewSupported=TRUE
+persist.vendor.camera.ismfnrbokehsupported=TRUE
+persist.vendor.camera.isVideoBeautifierSupported=TRUE
+persist.vendor.camera.logInfoMask=0
+persist.vendor.camera.minReprocessInputWidth=4000
+persist.vendor.camera.minReprocessInputHeight=3000
+persist.vendor.camera.multiCameraEnable=TRUE
+persist.vendor.camera.multiCameraFpsMatch=TRUE
+persist.vendor.camera.multiCameraFrameSync=1
+persist.vendor.camera.multiCameraHwSync=TRUE
+persist.vendor.camera.overrideLogLevels=0x1F
+persist.vendor.camera.useFeatureForQCFA=1

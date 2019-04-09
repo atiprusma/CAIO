@@ -1,2 +1,5 @@
+# Additional props for MIUI
+vendor.camera.aux.packagelist=org.codeaurora.snapcam,com.android.camera,com.qualcomm.qti.qmmi,org.lineage.snap,com.google.android.GoogleCamera,com.google.android.GoogleCameraTele,com.google.android.GoogleCameraWide,com.bsgmod.camera
+vendor.camera.hal1.packagelist=com.skype.raider,com.whatsapp,com.android.camera,com.facebook.katana,com.gbwhatsapp,com.gbinsta
 persist.vendor.camera.HAL3.enabled=1
 persist.vendor.camera.eis.enable=0
