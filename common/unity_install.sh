@@ -102,7 +102,6 @@ EISENC() {
 }
 
 AOSPLOS() {
-  #unzip -oq $CUS/32bit -d $TMPDIR 2>/dev/null
   unzip -oq $CUS/64bit -d $TMPDIR 2>/dev/null
   
   ui_print " "
@@ -155,12 +154,10 @@ AOSPLOS() {
   ui_print "  Vol+ (Up)   = System-wide (App, system and vendor)"
   ui_print "  Vol- (Down) = App only (Recommended)"
   if $VKSEL; then
-      #GORENG "32bit" "priv-app/$MICAM/lib/arm"
       GORENG "64bit" "priv-app/$MICAM/lib/arm64"
       GORENG "64bit" "lib64"
       GORENG "64bit" "vendor/lib64"
   else
-      #GORENG "32bit" "priv-app/$MICAM/lib/arm"
       GORENG "64bit" "priv-app/$MICAM/lib/arm64"
   fi
 
@@ -185,7 +182,6 @@ then
     EISENC
     AOSPLOS
     cp_ch $CUS/model $TMPDIR/system/vendor/etc/camera/model_back.dlc 2>/dev/null
-    #cp_ch $CUS/model $TMPDIR/system/vendor/etc/camera/model_front.dlc
     sed -i "2 s/One/One for AOSP\/LOS/" $TMPDIR/module.prop 2>/dev/null
 else
     ui_print " "
@@ -247,5 +243,3 @@ ui_print "   *            FROM RECOVERY/TWRP              *"
 ui_print "   **********************************************"
 ui_print " "
 sleep 5
-# Downgrade version code; testing purpose only
-sed -i "4 s/$(grep_prop versionCode $TMPDIR/module.prop)/1/" $TMPDIR/module.prop
