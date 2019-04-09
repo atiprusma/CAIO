@@ -12,13 +12,13 @@ TAMBAL() {
   X=$(($W - 1))
   Y=$(($(cat $DFM | grep -n '<bool' | tail -n2 | head -n1 | cut -d: -f1) + $X))
   if [ ! "$X" == "-1" ]; then
-     if [ ! "$v" == "$2" ]; then
-         sed -i "$w s/$v/$2/" $DFM 2>/dev/null
-         sed -i "$X a\    <!-- Modified by Aradium  -->" $DFM 2>/dev/null
+     if [ ! "$V" == "$2" ]; then
+         sed -i "$w s/$V/$2/" $DFM 2>/dev/null
+         sed -i "$X a\    <!-- Modified by $MODID -->" $DFM 2>/dev/null
      fi
   else
      sed -i "$Y a\    <bool name=\"$1\">$2</bool>" $DFM 2>/dev/null
-     sed -i "$(($Y + $X)) a\    <!-- Added by Aradium  -->" $DFM 2>/dev/null
+     sed -i "$(($Y + $X)) a\    <!-- Added by $MODID -->" $DFM 2>/dev/null
   fi
 }
 
@@ -59,12 +59,10 @@ PASANG() {
       MICAM="$SYSCAM"
   else
       ui_print "  > $MICAM"
-      ui_print " "
-      ui_print "  ! Please manually give permissions for MIUI Camera !"
   fi
   BERSIHIN
   unzip -oq $CUS/permissions -d $TMPDIR 2>/dev/null
-  mkdir -p $TMPDIR/system/priv-app/$MICAM 2/dev/null
+  mkdir -p $TMPDIR/system/priv-app/$MICAM 2>/dev/null
   cp -f $CUS/$1.apk $TMPDIR/system/priv-app/$MICAM/$MICAM.apk 2>/dev/null
   sleep 3
 }
@@ -118,12 +116,12 @@ AOSPLOS() {
       ui_print "  Vol- (Down) = Stock Mi A1"
       if $VKSEL; then
           PASANG "MiA2"
-          ui_print "  ! Please manually gives MIUI Camera permission !"
+          ui_print "  ! Please manually give MIUI Camera permission !"
           sed -i "s/MIUI Camera/MIUI Camera from Mi A2/g" $TMPDIR/module.prop 2>/dev/null
           sleep 1
       else
           PASANG "MiA1"
-          ui_print "  ! Please manually gives MIUI Camera permission !"
+          ui_print "  ! Please manually give MIUI Camera permission !"
           sed -i "s/MIUI Camera/MIUI Camera from Mi A1/g" $TMPDIR/module.prop 2>/dev/null
           sleep 1
       fi
