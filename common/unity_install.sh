@@ -59,7 +59,7 @@ PASANG() {
       mktouch $TMPDIR/system/priv-app/$MICAM/.replace 2>/dev/null
   else
       MICAM="$1"Camera
-      [ ! "$1" == "Part7" ] && ui_print "  Notes: $1 need manual permissions granting"
+      [ ! "$1" == "Part7" ] && { ui_print " "; ui_print "  Notes: $1 need manual permissions granting"; }
       cp_ch -i $CUS/perms.xml $TMPDIR/system/etc/permissions/privapp-permissions-com.android.camera.xml 2>/dev/null
       cp_ch -i $CUS/perms.xml $TMPDIR/system/vendor/etc/permissions/privapp-permissions-com.android.camera.xml 2>/dev/null
   fi
@@ -75,7 +75,7 @@ EISENC() {
   ui_print "  Vol- (Down) = No"
   if $VKSEL; then
       ui_print "  > EIS enabled"
-      sed -i "s/eis.enable=0/eis.enable=1/g" $TMPDIR/custom/aosp.prop
+      sed -i "s/eis.enable=0/eis.enable=1/g" $TMPDIR/custom/aosplos.prop
       sed -i "s/eis.enable=0/eis.enable=1/g" $TMPDIR/custom/miui.prop
       sed -i "s/disable EIS/enable EIS/g" $TMPDIR/module.prop
   else

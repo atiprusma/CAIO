@@ -40,7 +40,7 @@ unity_custom() {
   DEVNAME=$(grep_prop ro.product.model)
   DEVCODE=$(grep_prop ro.build.product)
   # Device check
-  if [ "$DEVCODE" == "jasmine" -o "jasmine_sprout" -o "wayne" -o "whyred" ]; then
+  if [ "$DEVCODE" == "jasmine" -o "jasmine_sprout" -o "wayne" -o "whyred" -o "tulip" ]; then
       [ $DEVCODE == "wayne" ] && DEVNAME="Mi 6X"
       ui_print " "
       ui_print "- Your $DEVNAME ($DEVCODE) is compatible device"
