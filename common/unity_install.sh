@@ -227,7 +227,7 @@ then
     EISENC
     AOSPLOS
     DF_PATCH
-    prop_process $TMPDIR/aosplos.prop
+    prop_process $TMPDIR/custom/aosplos.prop
 else
     ui_print " "
     ui_print "  > $ROM is MIUI based"
