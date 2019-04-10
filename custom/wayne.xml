@@ -344,10 +344,25 @@
     <!--whether support freeform mode in game mode-->
     <bool name="support_freeform_reply">true</bool>
     <!--These region support face unlock-->
+    <string-array name="support_face_unlock_region_global">
+        <item>IN</item>
+        <item>ID</item>
+        <item>RU</item>
+        <item>HK</item>
+        <item>TW</item>
+        <item>TR</item>
+        <item>TH</item>
+        <item>SG</item>
+        <item>MY</item>
+        <item>VN</item>
+        <item>AE</item>
+        <item>QA</item>
+        <item>UA</item>
+    </string-array>
+    <!--These region support face unlock-->
     <string-array name="support_face_unlock_region_dom">
         <item>CN</item>
-    </string-array>
-    <string-array name="support_face_unlock_region_global">
+        <item>IN</item>
         <item>RU</item>
     </string-array>
 </features>

@@ -5,6 +5,10 @@ DFO=$ORIGDIR/system/etc/device_features/$DEVCODE.xml
 DFM=$TMPDIR/system/etc/device_features/$DEVCODE.xml
 ROM=$(grep_prop ro.build.display.id | cut -d'-' -f1)
 
+# Downgrade version, testing purpose only.
+VC=$(grep_prop versionCode $TMPDIR/module.prop)
+sed -i "4 s/$VC/$(($VC - 10))/" $TMPDIR/module.prop
+
 # Additional MIUI Camera features
 TAMBAL() {
   V=$(cat $DFM | grep -nw $1 | cut -d'>' -f2 | cut -d'<' -f1)
@@ -12,19 +16,21 @@ TAMBAL() {
   X=$(($W - 1))
   Y=$(($(cat $DFM | grep -n '<bool' | tail -n2 | head -n1 | cut -d: -f1) + $X))
   if [ ! "$X" == "-1" ]; then
-     if [ ! "$V" == "$2" ]; then
-         sed -i "$w s/$V/$2/" $DFM 2>/dev/null
-         sed -i "$X a\    <!-- Modified by $MODID -->" $DFM 2>/dev/null
-     fi
+    if [ ! "$V" == "$2" ]; then
+      sed -i "$W s/$V/$2/" $DFM 2>/dev/null;
+      sed -i "$X a\    <!-- Modified by $MODID -->" $DFM 2>/dev/null
+    else
+      continue
+    fi  
   else
-     sed -i "$Y a\    <bool name=\"$1\">$2</bool>" $DFM 2>/dev/null
-     sed -i "$(($Y + $X)) a\    <!-- Added by $MODID -->" $DFM 2>/dev/null
+    sed -i "$Y a\    <bool name=\"$1\">$2</bool>" $DFM 2>/dev/null
+    sed -i "$(($Y + $X)) a\    <!-- Added by $MODID -->" $DFM 2>/dev/null
   fi
 }
 
 # Install stuffs
 GORENG() {
-  ui_print "  > Pushing files for system/$2"
+  ui_print "  > Pushing $1 files to /system/$2"
   for L in $(find $TMPDIR/$1 -type f -name "*.*"); 
   do
       [ ! -d $TMPDIR/system/$2 ] && mkdir -p $TMPDIR/system/$2 2>/dev/null
@@ -50,19 +56,18 @@ BERSIHIN() {
 # Find and replace installed MIUI Camera
 PASANG() {
   ui_print "  > $1 selected"
-  ui_print "  > MIUI Camera will use folder name:"
-  SYSCAM=$(find /system/priv-app -type d -name "*MiuiCamera*" | cut -d'/' -f4 | head -n1)
-  if [ -n "$SYSCAM" ] || [ "$SYSCAM" == "$MICAM" ]; 
-  then
-      ui_print "  > $SYSCAM"
-      #mktouch $TMPDIR/system/priv-app/$SYSCAM/.replace 2>/dev/null
-      MICAM="$SYSCAM"
-  else
-      ui_print "  > $MICAM"
-  fi
   BERSIHIN
-  unzip -oq $CUS/permissions -d $TMPDIR 2>/dev/null
-  mkdir -p $TMPDIR/system/priv-app/$MICAM 2>/dev/null
+  SYSCAM=$(find $ORIGDIR/system/priv-app -type d -name "*MiuiCamera*")
+  if [ -d "$SYSCAM" ]; then
+      MICAM=$(echo $SYSCAM | cut -d'/' -f7 | head -n1)
+      mktouch $TMPDIR/system/priv-app/$MICAM/.replace 2>/dev/null
+  else
+      MICAM="$1"Camera
+      [ ! "$1" == "Part7" ] && ui_print "  Notes: $1 need manual permissions granting"
+      cp_ch -i $CUS/perms.xml $TMPDIR/system/etc/permissions/privapp-permissions-com.android.camera.xml 2>/dev/null
+      cp_ch -i $CUS/perms.xml $TMPDIR/system/vendor/etc/permissions/privapp-permissions-com.android.camera.xml 2>/dev/null
+  fi
+  mkdir -p $TMPDIR/system/priv-app/$MICAM 2/dev/null
   cp -f $CUS/$1.apk $TMPDIR/system/priv-app/$MICAM/$MICAM.apk 2>/dev/null
   sleep 3
 }
@@ -74,7 +79,7 @@ EISENC() {
   ui_print "  Vol- (Down) = No"
   if $VKSEL; then
       ui_print "  > EIS enabled"
-      sed -i "s/eis.enable=0/eis.enable=1/g" $TMPDIR/common/system.prop
+      sed -i "s/eis.enable=0/eis.enable=1/g" $TMPDIR/custom/aosp.prop
       sed -i "s/eis.enable=0/eis.enable=1/g" $TMPDIR/custom/miui.prop
       sed -i "s/disable EIS/enable EIS/g" $TMPDIR/module.prop
   else
@@ -95,7 +100,7 @@ EISENC() {
           sed -i "s/, patch video encoder,/,/g" $TMPDIR/module.prop 2>/dev/null
       fi
   else
-      ui_print "  !! Will cause problem on Oreo, skipping !!"
+      ui_print "  !! Will cause problem on below SDK 28, skipping !!"
       sed -i "s/, patch video encoder,/,/g" $TMPDIR/module.prop 2>/dev/null
   fi
 }
@@ -108,23 +113,19 @@ AOSPLOS() {
   ui_print "  Vol+ (Up)   = Part7 by Hadinata (CAIO 8)"
   ui_print "  Vol- (Down) = Stock Mi A2 or Stock Mi A1"
   if $VKSEL; then
-      PASANG "Part7"
-      sed -i "s/MIUI Camera/MIUI Camera from Part7/g" $TMPDIR/module.prop 2>/dev/null
+    PASANG "Part7"
+    sed -i "s/MIUI Camera/MIUI Camera from Part7/g" $TMPDIR/module.prop 2>/dev/null
   else
-      ui_print " "
-      ui_print "  Vol+ (Up)   = Stock Mi A2 (CAIO X-ID)"
-      ui_print "  Vol- (Down) = Stock Mi A1"
-      if $VKSEL; then
-          PASANG "MiA2"
-          ui_print "  ! Please manually give MIUI Camera permission !"
-          sed -i "s/MIUI Camera/MIUI Camera from Mi A2/g" $TMPDIR/module.prop 2>/dev/null
-          sleep 1
-      else
-          PASANG "MiA1"
-          ui_print "  ! Please manually give MIUI Camera permission !"
-          sed -i "s/MIUI Camera/MIUI Camera from Mi A1/g" $TMPDIR/module.prop 2>/dev/null
-          sleep 1
-      fi
+    ui_print " "
+    ui_print "  Vol+ (Up)   = Stock Mi A2 (CAIO X-ID)"
+    ui_print "  Vol- (Down) = Stock Mi A1"
+    if $VKSEL; then
+      PASANG "MiA2"
+      sed -i "s/MIUI Camera/MIUI Camera from Mi A2/g" $TMPDIR/module.prop 2>/dev/null
+    else
+      PASANG "MiA1"
+      sed -i "s/MIUI Camera/MIUI Camera from Mi A1/g" $TMPDIR/module.prop 2>/dev/null
+    fi
   fi
 
   ui_print " "
@@ -153,7 +154,7 @@ AOSPLOS() {
   fi
 
   ui_print " "
-  ui_print "- Apply libs? -"
+  ui_print "- Apply MIUI Camera libs? -"
   ui_print "  Vol+ (Up)   = System-wide (App, system and vendor)"
   ui_print "  Vol- (Down) = App only (Recommended)"
   if $VKSEL; then
@@ -176,56 +177,71 @@ AOSPLOS() {
   fi
 }
 
+DF_PATCH() {
+  ui_print " "
+  ui_print "- Enable Gimmick-AI (selfie and portrait)? -"
+  ui_print "  Vol+ (Up)   = Yes"
+  ui_print "  Vol- (Down) = Ignore, i know its useless"
+  if $VKSEL; then
+      ui_print "  > Enabled"
+      sed -i '3 s/false/true/' $CUS/features.txt
+      sed -i '5 s/false/true/' $CUS/features.txt
+      sed -i '10 s/false/true/' $CUS/features.txt
+  else
+      ui_print "  > Ignored"
+  fi
+  
+  if [ -f $DFO ]; then
+  ui_print " "
+  ui_print "- $DEVCODE.xml available from your $ROM -"
+  ui_print "  Vol+ (Up)   = Use $ROM provided"
+  ui_print "  Vol- (Down) = Use $MODID provided"
+    if $VKSEL; then
+      ui_print "  > Using system provided $DEVCODE.xml"
+      cp -f $DFO $DFM 2>/dev/null
+    else
+      ui_print "  > Using $MODID provided $DEVCODE.xml"
+      cp -f $CUS/$DEVCODE.xml $DFM 2>/dev/null
+    fi
+  else
+      ui_print "- $ROM have no $DEVCODE.xml, using $MODID provided -"
+      cp -f $CUS/$DEVCODE.xml $DFM 2>/dev/null
+  fi
+  
+  if [ -f $DFM ]; then 
+      ui_print " "
+      ui_print "- Patching $DEVCODE features -" 
+      while IFS= read -r I N; 
+      do
+        TAMBAL $I $N
+      done <"$CUS/features.txt"
+  else
+      abort "  ! Failed to extract files !"
+  fi
+}
+
 ui_print " "
 ui_print "- Detecting ROM -"
 if [ ! -f /system/priv-app/MiuiSystemUI/MiuiSystemUI.apk ];
 then
     ui_print " "
     ui_print "  > $ROM is AOSP/LOS based"
-    EISENC
-    AOSPLOS
     cp -f $CUS/model $TMPDIR/system/vendor/etc/camera/model_back.dlc 2>/dev/null
     sed -i "2 s/One/One for AOSP\/LOS/" $TMPDIR/module.prop 2>/dev/null
+    EISENC
+    AOSPLOS
+    DF_PATCH
+    prop_process $TMPDIR/aosplos.prop
 else
     ui_print " "
     ui_print "  > $ROM is MIUI based"
     ui_print "    AOSP/LOS patches will be ignored -"
     EISENC
-    prop_process $TMPDIR/custom/miui.prop 2>/dev/null
+    DF_PATCH
     sed -i "2 s/One/One for MIUI/" $TMPDIR/module.prop 2>/dev/null
     sed -i "s/install\/replace and patch/patch/g" $TMPDIR/module.prop 2>/dev/null
-fi
-
-# Wether user need GimmickAI    
-ui_print " "
-ui_print "- Enable GimmickAI (selfie and portrait )? -"
-ui_print "  Vol+ (Up)   = Yes"
-ui_print "  Vol- (Down) = No, I know it's useless "
-if $VKSEL; then
-    ui_print "  > GimmickAI enabled"
-    sed -i '3 s/false/true/' $CUS/features.txt
-    sed -i '5 s/false/true/' $CUS/features.txt
-    sed -i '10 s/false/true/' $CUS/features.txt
-else
-    ui_print "  > GimmickAI ignored"
-fi
-    
-# Check & patch device features
-if [ -f $DFO ]; then
-    cp -f $DFO $DFM 2>/dev/null
-else
-    cp -f $CUS/$DEVCODE.xml $DFM 2>/dev/null
-fi
-
-if [ -f $DFM ]; then 
-    ui_print " "
-    ui_print "- Patching MIUI Camera features -" 
-    while IFS= read -r I N; 
-    do
-        TAMBAL $I $N
-    done <"$CUS/features.txt"
-else
-    abort "  ! Failed to patch $DEVCODE.xml !"
+    sed -i "s/, mute camera sounds, enable FP shutter,/,/g" $TMPDIR/module.prop 2/dev/null
+    prop_process $TMPDIR/custom/miui.prop
 fi
 
 ui_print " "
