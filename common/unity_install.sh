@@ -5,10 +5,6 @@ DFO=$ORIGDIR/system/etc/device_features/$DEVCODE.xml
 DFM=$TMPDIR/system/etc/device_features/$DEVCODE.xml
 ROM=$(grep_prop ro.build.display.id | cut -d'-' -f1)
 
-# Downgrade version, testing purpose only.
-VC=$(grep_prop versionCode $TMPDIR/module.prop)
-sed -i "4 s/$VC/$(($VC - 10))/" $TMPDIR/module.prop
-
 # Additional MIUI Camera features
 TAMBAL() {
   V=$(cat $DFM | grep -nw $1 | cut -d'>' -f2 | cut -d'<' -f1)
