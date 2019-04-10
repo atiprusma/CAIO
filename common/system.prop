@@ -1,3 +1,52 @@
 # This file will be read by resetprop
 # Example: Change dpi
 # ro.sf.lcd_density=320
+# Forcing AUX for listed packages
+vendor.camera.aux.packagelist=org.codeaurora.snapcam,com.android.camera,com.google.android.GoogleCamera,com.bsgmod.camera,org.lineage.snap,com.qualcomm.qti.qmmi
+camera.aux.packagelist=org.codeaurora.snapcam,com.android.camera,com.google.android.GoogleCamera,com.bsgmod.camera,org.lineage.snap,com.qualcomm.qti.qmmi
+
+# Forcing HAL1 for below packages
+vendor.camera.hal1.packagelist=com.skype.raider,com.whatsapp,com.facebook.katana,com.gbwhatsapp,com.gbinsta
+camera.hal1.packagelist=com.skype.raider,com.whatsapp,com.facebook.katana,com.gbwhatsapp,com.gbinsta
+
+# Exif property
+persist.sys.exif.make=Xiaomi
+persist.sys.exif.model=Mi 6X
+
+# Advance features vendor props
+vendor.camera.advanceFeatureMask=0x7E7
+vendor.camera.disablePDAF=FALSE
+vendor.camera.disableFocusIndication=1
+vendor.camera.EISWidthMargin=0.25
+vendor.camera.EISHeightMargin=0.4
+vendor.camera.EISLDCGridEnabled=1
+vendor.camera.EISv3GyroDumpEnabled=0
+vendor.camera.EISv3OperationMode=0
+vendor.camera.EISv2GyroDumpEnabled=0
+vendor.camera.EISv2OperationMode=0
+vendor.camera.enable3ADebugData=FALSE
+vendor.camera.enableAdvanceFeatures=TRUE
+vendor.camera.enableBubbleRecovery=FALSE
+vendor.camera.enableICAInGrid=1
+vendor.camera.enableIHDRSnapshot=1
+vendor.camera.enableInternalHALPixelStreamConfig=TRUE
+vendor.camera.enableSensorHWSync=TRUE
+vendor.camera.enableSensorFpsMatch=TRUE
+vendor.camera.enableTuningMetadata=FALSE
+vendor.camera.exposeFullSizeForQCFA=FALSE
+vendor.camera.FDPreProcessing=GTM
+vendor.camera.fovcEnable=1
+vendor.camera.forceDisableUBWCOnIfeIpeLink=0
+vendor.camera.isBeautyMakeupSupported=TRUE
+vendor.camera.iseispreviewSupported=TRUE
+vendor.camera.ismfnrbokehsupported=TRUE
+vendor.camera.isVideoBeautifierSupported=TRUE
+vendor.camera.logInfoMask=0
+vendor.camera.minReprocessInputWidth=4000
+vendor.camera.minReprocessInputHeight=3000
+vendor.camera.multiCameraEnable=TRUE
+vendor.camera.multiCameraFpsMatch=TRUE
+vendor.camera.multiCameraFrameSync=1
+vendor.camera.multiCameraHwSync=TRUE
+vendor.camera.overrideLogLevels=0x1F
+vendor.camera.useFeatureForQCFA=1
