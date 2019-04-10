@@ -194,14 +194,14 @@ DF_PATCH() {
   ui_print "  Vol- (Down) = Use $MODID provided"
     if $VKSEL; then
       ui_print "  > Using system provided $DEVCODE.xml"
-      cp -f $DFO $DFM 2>/dev/null
+      cp -rf $DFO $DFM 2>/dev/null
     else
       ui_print "  > Using $MODID provided $DEVCODE.xml"
-      cp -f $CUS/$DEVCODE.xml $DFM 2>/dev/null
+      cp -rf $CUS/$DEVCODE.xml $DFM 2>/dev/null
     fi
   else
       ui_print "- $ROM have no $DEVCODE.xml, using $MODID provided -"
-      cp -f $CUS/$DEVCODE.xml $DFM 2>/dev/null
+      cp -rf $CUS/$DEVCODE.xml $DFM 2>/dev/null
   fi
   
   if [ -f $DFM ]; then 
