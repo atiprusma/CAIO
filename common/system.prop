@@ -1,6 +1,3 @@
-# This file will be read by resetprop
-# Example: Change dpi
-# ro.sf.lcd_density=320
 # Exif properties
 persist.sys.exif.make=Xiaomi
 persist.sys.exif.model=Mi 6X
