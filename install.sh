@@ -37,17 +37,30 @@ set_permissions() {
 }
 
 unity_custom() {
+  # Device check vars
   DEVNAME=$(grep_prop ro.product.model)
   DEVCODE=$(grep_prop ro.build.product)
-  # Device check
-  if [ "$DEVCODE" == "jasmine" -o "jasmine_sprout" -o "wayne" -o "whyred" -o "tulip" ]; then
-      [ $DEVCODE == "wayne" ] && DEVNAME="Mi 6X"
-      ui_print " "
-      ui_print "- Your $DEVNAME ($DEVCODE) is compatible device"
-      sed -i "s/Mi 6X/$DEVNAME/g" $TMPDIR/common/system.prop
-      sed -i "s/meme/$DEVNAME/g" $TMPDIR/module.prop
+  DEVLIST="
+  daisy_sprout
+  jasmine_sprout
+  tulip
+  wayne
+  whyred
+  "
+  # Begin checking devices
+  if $MAGISK; then
+     [ "$DEVCODE" ==  "wayne" ] && DEVNAME="Mi 6X"
+     LANJUT=false
+     for HP in ${DEVLIST}; do
+       [ "$DEVCODE" == "$HP" ] && LANJUT=true
+     done
+     if $LANJUT; then
+       ui_print "- Your $DEVNAME ($DEVCODE) is supported"
+       sed -i "s/UnF/$DEVNAME/g" $TMPDIR/module.prop
+     else
+       abort "  ! Your $DEVNAME ($DEVCODE) is not supported"
+     fi
   else
-      ui_print " "
-      abort " ! Your $DEVNAME ($DEVCODE) is incompatible !"      
+     abort " ! $MODID only for magisk for system file safety !"
   fi
 }

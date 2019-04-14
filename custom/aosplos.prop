@@ -4,8 +4,18 @@ ro.config.calibration_cad=/system/etc/calibration_cad.xml
 # Additional buffers shared between Camera and Video
 vidc.enc.dcvs.extra-buff-count=2
 
+# Forcing AUX for listed packages
+vendor.camera.aux.packagelist=org.codeaurora.snapcam,com.android.camera,com.google.android.GoogleCamera,com.bsgmod.camera,org.lineage.snap,com.qualcomm.qti.qmmi
+camera.aux.packagelist=org.codeaurora.snapcam,com.android.camera,com.google.android.GoogleCamera,com.bsgmod.camera,org.lineage.snap,com.qualcomm.qti.qmmi
+
+# Forcing HAL1 for below packages
+vendor.camera.hal1.packagelist=com.skype.raider,com.whatsapp,com.facebook.katana,com.gbwhatsapp,com.gbinsta
+camera.hal1.packagelist=com.skype.raider,com.whatsapp,com.facebook.katana,com.gbwhatsapp,com.gbinsta
+
 # HAL3 & EIS
+persist.vendor.camera.HAL3.enabled=1
 persist.camera.HAL3.enabled=1
+persist.vendor.camera.eis.enable=0
 persist.camera.eis.enable=0
 
 # Properties for lux

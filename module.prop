@@ -1,6 +1,6 @@
 id=CAIO
-name=[meme] Camera All-in-One
-version=XIV (v14.7)
-versionCode=147
+name=[UnF] Camera All-in-One
+version=v15.0 (XV)
+versionCode=150
 author=atiprusma @ TG, Hadinata
-description=Various camera patch for meme. Systemlessly install/replace and patch MIUI Camera features, disable EIS, seemless 4k60 on GCam, patch video encoder, mute camera sounds, enable FP shutter, etc.
+description=Various camera patch for UnF.
