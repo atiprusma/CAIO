@@ -1,4 +1,10 @@
-# Expose AUX for listed packages
+# Add calibration file path
+ro.config.calibration_cad=/system/etc/calibration_cad.xml
+
+# Additional buffers shared between Camera and Video
+vidc.enc.dcvs.extra-buff-count=2
+
+# Forcing AUX for listed packages
 vendor.camera.aux.packagelist=org.codeaurora.snapcam,com.android.camera,com.google.android.GoogleCamera,com.bsgmod.camera,org.lineage.snap,com.qualcomm.qti.qmmi
 camera.aux.packagelist=org.codeaurora.snapcam,com.android.camera,com.google.android.GoogleCamera,com.bsgmod.camera,org.lineage.snap,com.qualcomm.qti.qmmi
 

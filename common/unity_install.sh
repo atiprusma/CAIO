@@ -5,8 +5,8 @@ sed -ri "s/versionCode=(.*)/versionCode=140/" $TMPDIR/module.prop 2>/dev/null
 CUS=$TMPDIR/custom
 DFO=$ORIGDIR/system/etc/device_features/$DEVCODE.xml
 DFM=$UNITY/system/etc/device_features/$DEVCODE.xml
-SYSCAM=$(find $ORIGDIR/system/priv-app -type d -name "*MiuiCamera*" | head -n1)
 ROM=$(grep_prop ro.build.display.id | cut -d'-' -f1)
+SYSCAM=$(find $ORIGDIR/system/priv-app -type d -name "*MiuiCamera*" | head -n1)
 
 # Description edit
 DEDIT() {
@@ -42,7 +42,7 @@ GORENG() {
 }
 
 
-# Clean-ups, install or replace
+# Clean-up app data
 BERSIHIN() {
 
   ui_print " "
@@ -126,31 +126,6 @@ BASIC() {
     ui_print "- $ROM have no MIUI features, using $MODID provided -"
     cp_ch $CUS/$DEVCODE.xml $DFM 2>/dev/null
   fi
-  
-  if [ -f $DFM ]; then
-    ui_print " "
-    ui_print "- Patching $DEVCODE.xml -"
-    DEDIT "patched $DEVCODE.xml, "
-    while IFS= read -r I N; do
-      TAMBAL $I $N
-    done <"$CUS/features.txt"
-  else
-    abort "  ! Failed to extract files !"
-  fi
-  
-  if $EIS; then
-    DEDIT "enabled EIS, "
-    sed -i "s/eis.enable=0/eis.enable=1/g" $CUS/aosplos.prop
-    sed -i "s/eis.enable=0/eis.enable=1/g" $CUS/miui.prop
-  else
-    DEDIT "disabled EIS, "
-  fi
-  
-  if $ENC; then
-    DEDIT "patched video encoder, "
-    GORENG "Encoder" "lib"
-    GORENG "Encoder" "vendor/lib"
-  fi
 }
 
 # Additional AOSP/LOS patches
@@ -181,7 +156,7 @@ AOSPLOS() {
   fi
   ui_print "  > $APK MIUI Camera selected"
   
-  if [ device_check "tulip" ] || [ device_check "wayne" ] || [ device_check "whyred" ]; then
+  if [ $DEVCODE == "tulip" ] || [ $DEVCODE == "wayne" ] || [ $DEVCODE == "whyred" ]; then
     ui_print " "
     ui_print "- Apply seemless GCam 4K60 recording ? -"
     ui_print "  Vol+ (Up)   = Yes"
@@ -224,13 +199,13 @@ AOSPLOS() {
   fi
  
   if [ -n "$SYSCAM" ]; then
-    ui_print " "
-    ui_print "- $INSNAME installed, replacing -"
     if $BOOTMODE; then
       INSNAME=$(echo $SYSCAM | cut -d'/' -f7)
     else
       INSNAME=$(echo $SYSCAM | cut -d'/' -f4)
     fi
+    ui_print " "
+    ui_print "- $INSNAME installed, replacing -"
     mktouch $UNITY/system/priv-app/$INSNAME/.replace 2>/dev/null
     DEDIT "replace MIUI Camera with $APK, "
   else
@@ -273,7 +248,7 @@ AOSPLOS() {
   fi
   
   if $FOURK; then
-    DEDIT " and seemless GCam 4K60 recording."
+    DEDIT "seemless GCam 4K60 recording, "
     GORENG "GCam" "vendor/lib"
   fi
 }
@@ -288,7 +263,7 @@ if $MAGISK; then
     sed -ri "s/name=(.*)/name=\1 for MIUI/" $TMPDIR/module.prop 2>/dev/null
     prop_process $CUS/miui.prop
     BASIC
-    DEDIT "Seemless GCam 4K60, "
+    DEDIT "seemless GCam 4K60 recording, "
   else
     ui_print " "
     ui_print "- $ROM is AOSP/LOS based -"
@@ -296,6 +271,31 @@ if $MAGISK; then
     prop_process $CUS/aosplos.prop
     BASIC
     AOSPLOS
+  fi
+  
+  if $EIS; then
+    DEDIT "EIS enabled, "
+    sed -i "s/eis.enable=0/eis.enable=1/g" $CUS/aosplos.prop
+    sed -i "s/eis.enable=0/eis.enable=1/g" $CUS/miui.prop
+  else
+    DEDIT "EIS disabled, "
+  fi
+  
+  if $ENC; then
+    DEDIT "video encoder patch, "
+    GORENG "Encoder" "lib"
+    GORENG "Encoder" "vendor/lib"
+  fi
+  
+  if [ -f $DFM ]; then
+    ui_print " "
+    ui_print "- Patching $DEVCODE.xml -"
+    DEDIT "and patch $DEVCODE.xml"
+    while IFS= read -r I N; do
+      TAMBAL $I $N
+    done <"$CUS/features.txt"
+  else
+    abort "  ! Failed to extract files !"
   fi
 else
   abort "  ! $MODID only for Magisk !"
